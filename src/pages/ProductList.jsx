@@ -6,7 +6,7 @@ import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 
 import styled from "styled-components"
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { useState } from "react";
 
 
@@ -41,36 +41,44 @@ const Option = styled.option`
 `
 
 const ProductList = () => {
-    const location = useLocation()
+    const location = useLocation();
 
-    const catagory = location.pathname.split("/")[2]
+    const catagory = location.pathname.split("/")[2];
+    // console.log(location)
+    // console.log(catagory)
+    const [filters, setFilters] = useState({});
+    const [sort, setSort] = useState("newest");
 
-    const [filters, setFilter] = useState({})
-    const [sort, setSort] = useState("newest")
     const handleFilters = (e) => {
         const value = e.target.value;
-        setFilter({
+        console.log(value)
+        setFilters({
             ...filters,
-            [e.target.name]: value
-        })
-    }
+            [e.target.name]: value,
+        });
+        console.log(filters)
+
+    };
+
 
     return (
         <Container>
             <Navbar />
             <Announcement />
-            <Title>Guitars</Title>
+            <Title>{catagory}</Title>
             <FilterContainer>
                 <Filter>
                     <FilterText>Filter Products:</FilterText>
-                    <Select name="Color" onChange={handleFilters}>
+                    <Select name="color" onChange={handleFilters}>
                         <Option disabled >Brand</Option>
-                        <Option>red</Option>
-                        <Option>rblacked</Option>
-                        <Option>Mantra</Option>
+                        <Option>semi</Option>
+                        <Option>electric</Option>
+                        <Option>black</Option>
+                        <Option>S</Option>
+                        <Option>M</Option>
                     </Select>
                     <Select name="size" onChange={handleFilters}>
-                        <Option disabled >Price</Option>
+                        <Option disabled >Size</Option>
                         <Option>M</Option>
                         <Option>S</Option>
                         <Option>30K-40K</Option>

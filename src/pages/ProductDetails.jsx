@@ -4,6 +4,10 @@ import Navbar from "../components/Navbar"
 import Footer from "../components/Footer";
 import Newsletter from "../components/Newsletter";
 import { Add, Remove } from '@mui/icons-material';
+import { useLocation } from "react-router-dom";
+import { publicRequest } from "../requestMethods";
+import { useEffect, useState } from "react";
+
 
 const Container = styled.div`
 
@@ -105,40 +109,64 @@ cursor: pointer;
 
 
 const ProductDetails = () => {
+    const location = useLocation();
+    const id = location.pathname.split("/")[2];
+    const [product, setProduct] = useState({});
+    const [quantity, setQuantity] = useState(1)
+
+    useEffect(() => {
+        const getProduct = async () => {
+            try {
+                const res = await publicRequest.get("/products/find/" + id);
+                setProduct(res.data);
+            } catch { }
+        };
+        getProduct();
+    }, [id]);
+
+
+    const handleQuantity = (type) => {
+        if (type === "dec") {
+            quantity > 1 && setQuantity(quantity - 1);
+        } else {
+            setQuantity(quantity + 1);
+        }
+    }
+
     return (
         <Container>
             <Navbar />
             <Announcement />
             <Wrapper>
                 <ImgContainer>
-                    <Image src=" https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png" />
+                    <Image src={product.img} />
                 </ImgContainer>
                 <InfoContainer>
-                    <Title>T-shirt</Title>
-                    <Desc>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores odio ipsa aspernatur officia, aperiam id architecto, provident reiciendis sunt assumenda illo expedita eaque, rem numquam tempore quod debitis similique esse!</Desc>
+                    <Title>{product.title}</Title>
+                    <Desc>{product.desc}</Desc>
                     <Price>Rs.2000 </Price>
                     <FilterContainer>
                         <Filter>
-                            <FilterTitle>Color</FilterTitle>
-                            <FilterColor color="black" />
-                            <FilterColor color="darkblue" />
-                            <FilterColor color="grey" />
+                            <FilterTitle>Color:</FilterTitle>
+                            {product.color?.map((c) => (
+                                <FilterColor color={c} key={c} />
+                            ))}
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
                             <FilterSize>
-                                <FilterSizeOption>Aucostic</FilterSizeOption>
-                                <FilterSizeOption>M</FilterSizeOption>
-                                <FilterSizeOption>L</FilterSizeOption>
+                                {product.size?.map((s) => (
+                                    <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                                ))}
 
                             </FilterSize>
                         </Filter>
                     </FilterContainer>
                     <AddContainer>
                         <AmountContainer>
-                            <Remove />
-                            <Amount>1</Amount>
-                            <Add />
+                            <Remove onClick={(e) => handleQuantity("dec")} />
+                            <Amount>{quantity}</Amount>
+                            <Add onClick={(e) => handleQuantity("inc")} />
                         </AmountContainer>
                         <Button>ADD TO CART</Button>
                     </AddContainer>

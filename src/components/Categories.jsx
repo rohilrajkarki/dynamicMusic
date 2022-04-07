@@ -32,7 +32,7 @@ const Categories = () => {
             <SubTitle>Home Music is the art of arranging sounds in time through the elements of melody, harmony, rhythm, and timbre.</SubTitle>
             <Contents>
                 {
-                    categories.map(item => (
+                    categories.map((item) => (
                         <CategoriesItem item={item} key={item.id} />
                     ))
                 }

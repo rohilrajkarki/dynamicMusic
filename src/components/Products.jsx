@@ -13,6 +13,7 @@ const Container = styled.div`
 `;
 
 const Products = ({ catagory, filters, sort }) => {
+    // console.log(catagory, filters, sort)
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -26,6 +27,7 @@ const Products = ({ catagory, filters, sort }) => {
                         : 'http://localhost:5000/api/products'
                 );
                 // console.log(res)
+                // console.log(catagory)
                 setProducts(res.data)
             } catch (error) {
                 console.log(error)
@@ -36,23 +38,46 @@ const Products = ({ catagory, filters, sort }) => {
     }, [catagory]);
 
     useEffect(() => {
-        catagory && setFilteredProducts(
-            products.filter((item) => {
-                Object.entries(filters).every(([key, value]) =>
-                    item[key].includes(value)
+        catagory &&
+            setFilteredProducts(
+                products.filter((item) =>
+                    Object.entries(filters).every(([key, value]) =>
+                        item[key].includes(value)
+                    )
                 )
-            })
-        )
-        console.log(filteredProducts)
-    }, [products, catagory, filters])
+            );
+        // console.log(products)
+    }, [products, catagory, filters]);
+
+    useEffect(() => {
+        if (sort === "newest") {
+            setFilteredProducts((prev) =>
+                [...prev].sort((a, b) => a.createdAt - b.createdAt)
+            );
+        } else if (sort === "asc") {
+            setFilteredProducts((prev) =>
+                [...prev].sort((a, b) => a.price - b.price)
+            );
+        } else {
+            setFilteredProducts((prev) =>
+                [...prev].sort((a, b) => b.price - a.price)
+            );
+        }
+    }, [sort]);
 
 
     return (
         <Container>
-            {products.map((item) => (
+            {/* {filteredProducts.map((item) => (
 
                 < Product item={item} key={item.id} />
-            ))}
+            ))} */}
+
+            {catagory
+                ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
+                : products
+                    .slice(0, 8)
+                    .map((item) => <Product item={item} key={item.id} />)}
         </Container>
     )
 }

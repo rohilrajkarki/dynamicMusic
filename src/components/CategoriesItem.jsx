@@ -42,7 +42,6 @@ bottom: 20px;
 left: 20px;
 position: absolute;
 width: 60%;
-
 `
 
 

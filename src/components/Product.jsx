@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import { Link } from 'react-router-dom';
 
 
 const Info = styled.div`
@@ -32,7 +33,6 @@ background-color: #ebf3f1;
 position: relative;
 
 /* flex-basis: 33.333333%; */
-
 &:hover ${Info} {
     opacity: 1;
 }
@@ -48,14 +48,11 @@ position: absolute;
 const Image = styled.img`
 height: 100%;
 width: 100%;
-
 z-index: 2;
-
 /* &:hover{
     background-image: url("https://i1.wp.com/handicraftsinnepal.com/wp-content/uploads/2020/04/daura-suruwal.png?resize=510%2C765&ssl=1");
 } */
 `
-
 
 const Icon = styled.div`
 width: 40px;
@@ -72,11 +69,11 @@ transition: all 0.5s ease;
     background-color: #d4bd9a;
     transform: scale(1.2);
 }
-
 `
 
 
 const Product = ({ item }) => {
+
 
     return (
         <Container>
@@ -88,12 +85,15 @@ const Product = ({ item }) => {
 
                 </Icon>
                 <Icon>
-                    <SearchOutlinedIcon />
+                    <Link to={`/product/${item._id}`}>
+                        <SearchOutlinedIcon />
+                    </Link>
                 </Icon>
                 <Icon>
                     <FavoriteBorderOutlinedIcon />
                 </Icon>
             </Info>
+            <div>{item.title}</div>
         </Container>
     )
 }
