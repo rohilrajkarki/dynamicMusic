@@ -13,19 +13,20 @@ import {
   Redirect
 } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+import { useSelector } from "react-redux";
 
 
 
-function App() {
-  const user = false;
+const App = () => {
+  const user = useSelector((state) => state.user.currentUser);
+  // const user = false;
 
   return (
-
     <Router>
       <ScrollToTop>
         <Switch >
           <Route exact path="/">
-            <Home user={user} />
+            <Home />
           </Route>
           <Route path="/products/:category">
             <ProductList />

@@ -6,6 +6,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 import { mobile } from "../responsive";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
 height:50px;
@@ -111,6 +112,8 @@ ${mobile({
 
 
 const Navbar = ({ user }) => {
+    const quantity = useSelector(state => state.cart.quantity)
+
     return (
         <Container>
             <Wrapper>
@@ -146,14 +149,15 @@ const Navbar = ({ user }) => {
                         <Input placeholder="Search" />
                         <SearchIcon style={{ color: "gray", fontSize: 16 }} />
                     </SearchContainer>
-
-                    <MenuItems>
-                        {/* <Stack spacing={10} direction="row"> */}
-                        <Badge badgeContent={4} color="primary">
-                            <ShoppingCartOutlinedIcon />
-                        </Badge>
-                        {/* </Stack> */}
-                    </MenuItems>
+                    <Link to="/cart">
+                        <MenuItems>
+                            {/* <Stack spacing={10} direction="row"> */}
+                            <Badge badgeContent={quantity} color="primary">
+                                <ShoppingCartOutlinedIcon />
+                            </Badge>
+                            {/* </Stack> */}
+                        </MenuItems>
+                    </Link>
                 </Left>
             </Wrapper>
         </Container >

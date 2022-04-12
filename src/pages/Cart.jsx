@@ -3,6 +3,8 @@ import Announcement from "../components/Announcement"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer";
 import { Add, Remove } from '@mui/icons-material';
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
 
@@ -136,6 +138,7 @@ font-weight: 600;
 `
 
 const Cart = () => {
+    const cart = useSelector((state) => state.cart);
     return (
         <Container>
             <Navbar />
@@ -143,7 +146,9 @@ const Cart = () => {
             <Wrapper>
                 <Title>YOUR BAG</Title>
                 <Top>
-                    <TopButton>CONTINUE SHOPPING</TopButton>
+                    <Link to="/">
+                        <TopButton>CONTINUE SHOPPING</TopButton>
+                    </Link>
                     <TopTexts>
                         <TopText>Shopping Bag(2)</TopText>
                         <TopText>Your Wishlist(3)</TopText>
@@ -152,59 +157,55 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A" />
-                                <Details>
-                                    <ProductName><b>Product:</b>WHAT ARE THOSE</ProductName>
-                                    <ProductId><b>Id:</b>29083475</ProductId>
-                                    <ProductColor color="black" />
-                                    <ProductSize><b>Size:</b>37</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <ProductPrice>Rs. 40</ProductPrice>
-                            </PriceDetail>
-                        </Product>
+                        {cart.products.map((product) => (
+                            <Product>
+                                <ProductDetail>
+                                    <Image src={product.img} />
+                                    <Details>
+                                        <ProductName>
+                                            <b>Product:</b> {product.title}
+                                        </ProductName>
+                                        <ProductId>
+                                            <b>ID:</b> {product._id}
+                                        </ProductId>
+                                        <ProductColor color={product.color} />
+                                        <ProductSize>
+                                            <b>Size:</b> {product.size}
+                                        </ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Add />
+                                        <ProductAmount>{product.quantity}</ProductAmount>
+                                        <Remove />
+                                    </ProductAmountContainer>
+                                    <ProductPrice>
+                                        Rs. {product.price * product.quantity}
+                                    </ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                        ))}
                         <Hr />
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A" />
-                                <Details>
-                                    <ProductName><b>Product:</b>WHAT ARE THOSE</ProductName>
-                                    <ProductId><b>Id:</b>29083475</ProductId>
-                                    <ProductColor color="black" />
-                                    <ProductSize><b>Size:</b>37</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <ProductPrice>Rs. 40</ProductPrice>
-                            </PriceDetail>
-                        </Product>
+
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>Rs.999</SummaryItemPrice>
+                            <SummaryItemPrice>Rs. {cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
-                            <SummaryItemText>Estimated Delivery</SummaryItemText>
-                            <SummaryItemPrice>Rs.69</SummaryItemPrice>
+                            <SummaryItemText>Estimated Shipping</SummaryItemText>
+                            <SummaryItemPrice>Rs. 5.90</SummaryItemPrice>
+                        </SummaryItem>
+                        <SummaryItem>
+                            <SummaryItemText>Shipping Discount</SummaryItemText>
+                            <SummaryItemPrice>Rs. -5.90</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem type="total">
-                            <SummaryItemText >Total</SummaryItemText>
-                            <SummaryItemPrice>Rs.6969</SummaryItemPrice>
+                            <SummaryItemText>Total</SummaryItemText>
+                            <SummaryItemPrice>Rs. {cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <Button>CHECKOUT NOW</Button>
                     </Summary>
