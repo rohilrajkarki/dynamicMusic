@@ -2,7 +2,6 @@ import styled from "styled-components"
 import Announcement from "../components/Announcement"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer";
-import { Add, Remove } from '@mui/icons-material';
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -149,16 +148,16 @@ const Cart = () => {
                     <Link to="/">
                         <TopButton>CONTINUE SHOPPING</TopButton>
                     </Link>
-                    <TopTexts>
+                    {/* <TopTexts>
                         <TopText>Shopping Bag(2)</TopText>
                         <TopText>Your Wishlist(3)</TopText>
-                    </TopTexts>
+                    </TopTexts> */}
                     <TopButton type="filled">CHECKOUT NOW</TopButton>
                 </Top>
                 <Bottom>
                     <Info>
                         {cart.products.map((product) => (
-                            <Product>
+                            <Product key={Math.random}>
                                 <ProductDetail>
                                     <Image src={product.img} />
                                     <Details>
@@ -176,9 +175,9 @@ const Cart = () => {
                                 </ProductDetail>
                                 <PriceDetail>
                                     <ProductAmountContainer>
-                                        <Add />
+                                        {/* <Add /> */}
                                         <ProductAmount>{product.quantity}</ProductAmount>
-                                        <Remove />
+                                        {/* <Remove /> */}
                                     </ProductAmountContainer>
                                     <ProductPrice>
                                         Rs. {product.price * product.quantity}

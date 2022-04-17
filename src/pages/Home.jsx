@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Announcement from "../components/Announcement";
 import Categories from '../components/Categories';
 import Footer from '../components/Footer';
@@ -10,15 +10,17 @@ import Slider from '../components/Slider'
 
 
 const Home = ({ user }) => {
+
     return (
         <div>
-            <Announcement />
-            <Navbar user={user} />
+            {/* <Announcement /> */}
+            {/* <Navbar user={user} /> */}
             <Slider />
             <Categories />
             <Products />
             <Newsletter />
             <Footer />
+
         </div>
     )
 }

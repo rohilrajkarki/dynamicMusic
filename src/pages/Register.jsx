@@ -1,3 +1,6 @@
+import axios from "axios"
+import { useState } from "react"
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 
@@ -40,7 +43,7 @@ font-size: 12px;
 margin: 20px 0px;
 `
 const Button = styled.button`
-width: 40%;
+width: 100%;
 border: none;
 padding: 15px 20px;
 background-color: teal;
@@ -48,21 +51,45 @@ cursor: pointer;
 `
 
 const Register = () => {
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(false)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(false)
+        try {
+            const res = await axios.post("http://localhost:5000/api/auth/register", {
+                username,
+                email,
+                password,
+            });
+            console.log(res)
+        } catch (error) {
+            // console.log(error);
+            setError(true);
+        }
+
+    }
+
+
     return (
         <Container>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
-                <Form>
-                    <Input placeholder="name" />
-                    <Input placeholder="last name" />
-                    <Input placeholder="username" />
-                    <Input placeholder="email" />
-                    <Input placeholder="password" />
-                    <Input placeholder="confirm password" />
+                <Form onSubmit={handleSubmit}>
+                    <Input placeholder="username" onChange={e => setUsername(e.target.value)} />
+                    <Input placeholder="email" onChange={e => setEmail(e.target.value)} />
+                    <Input placeholder="password" type="password" onChange={e => setPassword(e.target.value)} />
+                    {/* <Input placeholder="confirm password" /> */}
                     <Agreement>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium esse sapiente blanditiis vitae!
                         <b>PRIVACY POLICY</b>
                     </Agreement>
-                    <Button>CREATE</Button>
+                    <Link to="/login">
+                        <Button type="submit">CREATE</Button>
+                    </Link>
+                    {error && <span>Something went wrong!</span>}
                 </Form>
             </Wrapper>
         </Container>

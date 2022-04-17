@@ -14,6 +14,11 @@ import {
 } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { useSelector } from "react-redux";
+import Posts from "./components/Posts";
+import SinglePost from "./components/BlogPortion/SinglePost/SinglePost";
+import Write from "./components/BlogPortion/Write/Write";
+import Navbar from "./components/Navbar";
+import Announcement from "./components/Announcement";
 
 
 
@@ -24,9 +29,20 @@ const App = () => {
   return (
     <Router>
       <ScrollToTop>
+        <Announcement />
+        <Navbar user={user} />
         <Switch >
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route exact path="/post">
+            <Posts />
+          </Route>
+          <Route exact path="/write">
+            <Write />
+          </Route>
+          <Route exact path="/post/:id">
+            <SinglePost />
           </Route>
           <Route path="/products/:category">
             <ProductList />

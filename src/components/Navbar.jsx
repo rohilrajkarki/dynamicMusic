@@ -5,8 +5,10 @@ import Badge from '@mui/material/Badge';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 import { mobile } from "../responsive";
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../redux/userRedux';
+import { cartReset } from '../redux/cartRedux';
 
 const Container = styled.div`
 height:50px;
@@ -113,6 +115,17 @@ ${mobile({
 
 const Navbar = ({ user }) => {
     const quantity = useSelector(state => state.cart.quantity)
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        dispatch(logOut())
+        dispatch(cartReset())
+        history.push('/login')
+    }
+
+
 
     return (
         <Container>
@@ -126,9 +139,13 @@ const Navbar = ({ user }) => {
 
                 <Right>
                     <RightMenu>
-                        <RightMenuItems>Home</RightMenuItems>
-                        <RightMenuItems>Shop</RightMenuItems>
-                        <RightMenuItems>Blogs</RightMenuItems>
+                        <Link to="/">
+                            <RightMenuItems>Home</RightMenuItems>
+                        </Link>
+                        {/* <RightMenuItems>Shop</RightMenuItems> */}
+                        <Link to="/post">
+                            <RightMenuItems>Blogs</RightMenuItems>
+                        </Link>
                         <RightMenuItems>Community</RightMenuItems>
                         <RightMenuItems>
                             <Link to="/register"  >
@@ -144,7 +161,9 @@ const Navbar = ({ user }) => {
 
                 </Right>
                 <Left>
-                    <Language>EN</Language>
+
+                    <Language onClick={(e) => handleLogout(e)}>LogOut</Language>
+
                     <SearchContainer>
                         <Input placeholder="Search" />
                         <SearchIcon style={{ color: "gray", fontSize: 16 }} />
