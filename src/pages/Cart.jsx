@@ -140,8 +140,6 @@ const Cart = () => {
     const cart = useSelector((state) => state.cart);
     return (
         <Container>
-            <Navbar />
-            <Announcement />
             <Wrapper>
                 <Title>YOUR BAG</Title>
                 <Top>

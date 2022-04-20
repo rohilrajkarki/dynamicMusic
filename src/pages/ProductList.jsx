@@ -63,8 +63,6 @@ const ProductList = () => {
 
     return (
         <Container>
-            <Navbar />
-            <Announcement />
             <Title>{catagory}</Title>
             <FilterContainer>
                 <Filter>
@@ -77,12 +75,12 @@ const ProductList = () => {
                         <Option>S</Option>
                         <Option>M</Option>
                     </Select>
-                    <Select name="size" onChange={handleFilters}>
+                    {/* <Select name="size" onChange={handleFilters}>
                         <Option disabled >Size</Option>
                         <Option>M</Option>
                         <Option>S</Option>
                         <Option>30K-40K</Option>
-                    </Select>
+                    </Select> */}
                 </Filter>
                 <Filter>
                     <FilterText>Sort Products:</FilterText>

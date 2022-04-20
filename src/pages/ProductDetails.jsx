@@ -150,8 +150,7 @@ const ProductDetails = () => {
 
     return (
         <Container>
-            <Navbar />
-            <Announcement />
+
             <Wrapper>
                 <ImgContainer>
                     <Image src={product.img} />

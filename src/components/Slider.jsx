@@ -126,7 +126,7 @@ const Slider = () => {
                         <InfoContainer>
                             <Title>{items.title}</Title>
                             <Desc>{items.desc}</Desc>
-                            <Button >Shop Now</Button>
+                            {/* <Button >Shop Now</Button> */}
                         </InfoContainer>
                         <ImgContainer>
                             <Image src={items.img} type={sizechange} />

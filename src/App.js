@@ -19,6 +19,7 @@ import SinglePost from "./components/BlogPortion/SinglePost/SinglePost";
 import Write from "./components/BlogPortion/Write/Write";
 import Navbar from "./components/Navbar";
 import Announcement from "./components/Announcement";
+import Products from "./components/Products";
 
 
 
@@ -52,6 +53,9 @@ const App = () => {
           </Route>
           <Route path="/cart">
             <Cart />
+          </Route>
+          <Route path="/products">
+            <Products />
           </Route>
           <Route path="/login">
             {user ? <Redirect to="/" /> : <Login />}

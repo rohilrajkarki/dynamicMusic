@@ -146,7 +146,9 @@ const Navbar = ({ user }) => {
                         <Link to="/post">
                             <RightMenuItems>Blogs</RightMenuItems>
                         </Link>
-                        <RightMenuItems>Community</RightMenuItems>
+                        <Link to="/products">
+                            <RightMenuItems>Shop</RightMenuItems>
+                        </Link>
                         <RightMenuItems>
                             <Link to="/register"  >
                                 <MenuItems type={user}>Register</MenuItems>
